@@ -2,20 +2,21 @@
 
 
 
-#Checking for AD OU "Finance"
-$ouchecker = Get-ADOrganizationalUnit -Identity 'OU=Finance' -ErrorAction SilentlyContinue
+#creating variables
+$oupath = "ou=Finance,dc=consultingfirm,dc=com"
+$ouchecker = Get-ADOrganizationalUnit -Identity $oupath -ErrorAction SilentlyContinue
 
 if ($ouchecker) {
     Write-Output "Found OU Finance, deleting"
-    Remove-ADOrganizationalUnit -Identity $ouchecker -Confirm:$false
+    Remove-ADOrganizationalUnit -Identity $oupath -Confirm:$false
     Write-Output "Deleted"
 } else {
     Write-Output "OU Finance Not Found"
 }
 
 #Add the OU Finance
-New-ADOrganizationalUnit -Name "Finance"
-$oucreator = Get-ADOrganizationalUnit -Identity "OU=Finance" -ErrorAction SilentlyContinue
+New-ADOrganizationalUnit -Name "Finance" -Path "dc=consultingfirm, dc=com"
+$oucreator = Get-ADOrganizationalUnit -Identity $oupath -ErrorAction SilentlyContinue
 
 #Checks if the OU was created
 if ($oucreator) {
