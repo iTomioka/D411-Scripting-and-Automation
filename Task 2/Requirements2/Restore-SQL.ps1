@@ -7,17 +7,19 @@ $csv = "C:\Users\LabAdmin\Desktop\Requirements2\NewClientData.csv"
 
 # Checking for DB named ClientDB
 try {
-    $dbchecker = Read-SQLTableData -ServerInstance $serverconnection -DatabaseName $dbname
+    #Seeing if DB exists
+    $checkingDB = "SELECT database_id FROM sys.databases WHERE name = 'ClientDB'"
+    $sqldbcheck = Invoke-Sqlcmd -ServerInstance $serverconnection -Query $checkingDB
 
-    if ($dbchecker) {
-        Write-Host "DB Found. Deleting..."
-        Invoke-Sqlcmd -ServerInstance $serverconnection -Query "DROP DATABASE [$dbname]"
+    if ($sqldbcheck) {
+        Write-Host "DB Found.. Proceeding to Delete"
+        Invoke-Sqlcmd -ServerInstance $serverconnection -Query "DROP DATABASE [ClientDB]"
         Write-Host "DB Deleted."
     } else {
         Write-Host "DB Not Found"
     }
 } catch {
-    Write-Host "Error checking for database: $_"
+    Write-Host "There was an error in checking for the DB $_"
 }
 
 # Create a new DB named ClientDB on the SQL Server Instance
