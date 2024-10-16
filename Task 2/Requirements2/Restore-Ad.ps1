@@ -26,7 +26,8 @@ if ($oucreator) {
 }
 
 #Adding in the CSV
-$csv = ".\Requirements2\financePersonnel.csv"
+$csv = ".\financePersonnel.csv"
+$oupath = "ou=Finance,dc=consultingfirm,dc=com"
 
 if ($csv) {
     $financeusers = Import-Csv -Path $csv
@@ -36,6 +37,7 @@ if ($csv) {
 
         #Links the users to values we create from values pre-existing in the CSV
         New-AdUser `
+        -Pathh $oupath`
         -Samaccountname $user.samAccount `
         -GivenName $user.First_Name `
         -Surname $user.Last_Name `
@@ -44,6 +46,8 @@ if ($csv) {
         -PostalCode $user.PostalCode `
         -OfficePhone $user.OfficePhone `
         -MobilePhone $user.MobilePhone `
+        -AccountPassword (Read-Host -AsSecureString "Input Password")`
+        -Enabled $true`
     }
     Get-ADUser -Filter * -SearchBase “ou=Finance,dc=consultingfirm,dc=com” -Properties DisplayName,PostalCode,OfficePhone,MobilePhone > .\AdResults.txt
 }
