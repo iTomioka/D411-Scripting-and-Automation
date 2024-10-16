@@ -63,7 +63,7 @@ try {
         INSERT INTO [Client_A_Contacts] (FirstName, LastName, City, County, Zip, OfficePhone, MobilePhone)
         VALUES ('$($row.first_name)', '$($row.last_name)', '$($row.city)', '$($row.county)', '$($row.zip)', '$($row.officephone)', '$($row.mobilephone)')
 "@
-        Invoke-Sqlcmd -Database $dbname -ServerInstance $serverconnection -Query $insert
+        Invoke-Sqlcmd -Database "ClientDB" -ServerInstance $serverconnection -Query $insert
     }
     Write-Host "Data inserted into the table successfully."
 } catch {
@@ -72,7 +72,7 @@ try {
 
 # Generate output file with query results
 try {
-    Invoke-Sqlcmd -Database $dbname -ServerInstance $serverconnection -Query 'SELECT * FROM dbo.Client_A_Contacts' > .\SqlResults.txt
+    Invoke-Sqlcmd -Database "ClientDB" -ServerInstance $serverconnection -Query 'SELECT * FROM dbo.Client_A_Contacts' > .\SqlResults.txt
     Write-Host "Results saved to SqlResults.txt."
 } catch {
     Write-Host "Error generating query results: $_"
