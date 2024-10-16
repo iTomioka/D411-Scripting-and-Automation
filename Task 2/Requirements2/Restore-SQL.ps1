@@ -45,7 +45,7 @@ CREATE TABLE [Client_A_Contacts] (
 '@
 
 try {
-    Invoke-Sqlcmd -DatabaseName $dbname -ServerInstance $serverconnection -Query $tablecreation
+    Invoke-Sqlcmd -DatabaseName "ClientDB" -ServerInstance $serverconnection -Query $tablecreation
     Write-Host "Table created successfully"
 } catch {
     Write-Host "Error creating table: $_"
