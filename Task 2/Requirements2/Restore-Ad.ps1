@@ -38,7 +38,7 @@ if ($csv) {
 
         #Links the users to values we create from values pre-existing in the CSV
         New-AdUser `
-        -Pathh $oupath`
+        -Path $oupath`
         -Samaccountname $user.samAccount `
         -GivenName $user.First_Name `
         -Surname $user.Last_Name `
@@ -47,7 +47,7 @@ if ($csv) {
         -PostalCode $user.PostalCode `
         -OfficePhone $user.OfficePhone `
         -MobilePhone $user.MobilePhone `
-        -Enabled $true`
+        -PasswordNotRequired $true `
     }
     Get-ADUser -Filter * -SearchBase “ou=Finance,dc=consultingfirm,dc=com” -Properties DisplayName,PostalCode,OfficePhone,MobilePhone > .\AdResults.txt
 }
