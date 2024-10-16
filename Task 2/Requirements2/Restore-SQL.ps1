@@ -13,6 +13,9 @@ try {
 
     if ($sqldbcheck) {
         Write-Host "DB Found.. Proceeding to Delete"
+        #setting to single user mode
+        Invoke-Sqlcmd -ServerInstance $serverconnection -Query "ALTER DATABASE [ClientDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE"
+        #dropping the db
         Invoke-Sqlcmd -ServerInstance $serverconnection -Query "DROP DATABASE [ClientDB]"
         Write-Host "DB Deleted."
     } else {
