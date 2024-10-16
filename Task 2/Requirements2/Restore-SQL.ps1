@@ -22,7 +22,7 @@ try {
 
 # Create a new DB named ClientDB on the SQL Server Instance
 try {
-    Invoke-Sqlcmd -ServerInstance $serverconnection -Query "CREATE DATABASE [$dbname]"
+    Invoke-Sqlcmd -ServerInstance $serverconnection -Query "CREATE DATABASE [ClientDB]"
     Write-Host "DB Created Successfully"
 } catch {
     Write-Host "Error creating database: $_"
