@@ -31,9 +31,6 @@ $oupath = "ou=Finance,dc=consultingfirm,dc=com"
 
 if ($csv) {
     $financeusers = Import-Csv -Path $csv
-    $defaultpassword = "DefaultAcct.Pass123*"
-    $securepassword = ConvertTo-SecureString $defaultpassword -AsPlainText -Force
-
 
     #begin the loop for importing the users from the CSV
     foreach ($user in $financeusers) {
@@ -50,7 +47,6 @@ if ($csv) {
         -PostalCode $user.PostalCode `
         -OfficePhone $user.OfficePhone `
         -MobilePhone $user.MobilePhone `
-        -AccountPassword $securepassword`
         -Enabled $true`
     }
     Get-ADUser -Filter * -SearchBase “ou=Finance,dc=consultingfirm,dc=com” -Properties DisplayName,PostalCode,OfficePhone,MobilePhone > .\AdResults.txt
