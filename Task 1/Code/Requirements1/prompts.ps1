@@ -24,7 +24,6 @@ while ($true) {
                 try {
                     #Acquire the cpu and ram stats from the system then publish to terminal
                     $cpuLoad = Get-Counter '\Processor(_Total)\% Processor Time' | Select-Object -ExpandProperty CounterSamples | Select-Object -ExpandProperty CookedValue
-                    $cpuLoad = [math]::round($cpuLoad, 2)
 
                     # Get total and free physical memory
                     $totalMemory = (Get-Counter '\Memory\Available MBytes').CounterSamples.CookedValue + (Get-Counter '\Memory\Committed Bytes').CounterSamples.CookedValue / 1MB
