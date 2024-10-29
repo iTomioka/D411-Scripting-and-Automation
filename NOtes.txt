@@ -1,0 +1,6 @@
+File path seems to be the biggest issue with these, need to work with the instructor.
+
+Though, looks like can just make sure the file path works after removing the first level up
+	review the task results and youll see what im talking about
+
+also, there is an issue with the sorting for task 1 section 4
