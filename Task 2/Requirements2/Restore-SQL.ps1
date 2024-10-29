@@ -3,7 +3,7 @@
 # Variable creation
 $serverconnection = "SRV19-PRIMARY\SQLEXPRESS"
 $dbname = "ClientDB"
-$csv = "C:\Users\LabAdmin\Desktop\Requirements2\NewClientData.csv"
+$csv = "$PSScriptRoot\NewClientData.csv"
 
 # Checking for DB named ClientDB
 try {
@@ -72,7 +72,7 @@ try {
 
 # Generate output file with query results
 try {
-    Invoke-Sqlcmd -Database "ClientDB" -ServerInstance $serverconnection -Query 'SELECT * FROM dbo.Client_A_Contacts' > .\SqlResults.txt
+    Invoke-Sqlcmd -Database "ClientDB" -ServerInstance $serverconnection -Query 'SELECT * FROM dbo.Client_A_Contacts' > "$PSScriptRoot\SqlResults.txt"
     Write-Host "Results saved to SqlResults.txt."
 } catch {
     Write-Host "Error generating query results: $_"

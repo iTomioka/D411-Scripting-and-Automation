@@ -8,7 +8,12 @@ $ouchecker = Get-ADOrganizationalUnit -Identity $oupath -ErrorAction SilentlyCon
 
 if ($ouchecker) {
     Write-Output "Found OU Finance, deleting"
-    Remove-ADOrganizationalUnit -Identity $oupath -Confirm:$false
+    #Setting the protection of accidental deletion to false
+    Set-ADOrganizationUnit -Identity $oupath -ProtectedFromAccidentalDeletion:$false
+    #Inform now deleting
+    Write-Output "Deleting OU Finance"
+    #Removing the ADO Recursively
+    Remove-ADOrganizationalUnit -Identity $oupath -Recursive -Confirm:$false
     Write-Output "Deleted"
 } else {
     Write-Output "OU Finance Not Found"
@@ -26,7 +31,7 @@ if ($oucreator) {
 }
 
 #Adding in the CSV
-$csv = ".\financePersonnel.csv"
+$csv = "$PSScriptRoot\financePersonnel.csv"
 $oupath = "ou=Finance,dc=consultingfirm,dc=com"
 
 if ($csv) {
@@ -38,7 +43,7 @@ if ($csv) {
 
         #Links the users to values we create from values pre-existing in the CSV
         New-AdUser `
-        -Path $oupath`
+        -Path $oupath `
         -Samaccountname $user.samAccount `
         -GivenName $user.First_Name `
         -Surname $user.Last_Name `
@@ -49,5 +54,5 @@ if ($csv) {
         -MobilePhone $user.MobilePhone `
         -PasswordNotRequired $true `
     }
-    Get-ADUser -Filter * -SearchBase “ou=Finance,dc=consultingfirm,dc=com” -Properties DisplayName,PostalCode,OfficePhone,MobilePhone > .\AdResults.txt
+    Get-ADUser -Filter * -SearchBase “ou=Finance,dc=consultingfirm,dc=com” -Properties DisplayName,PostalCode,OfficePhone,MobilePhone > "$PSScriptRoot\AdResults.txt"
 }
