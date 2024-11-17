@@ -17,7 +17,7 @@ while ($true) {
             }
             2 {
                 #grab the items from within the Requirements1 folder, order them, then output to the file
-                Get-ChildItem -Path $PSScriptRoot | Sort-Object Name -Descending | Format-Table Name, LastAccessTime, LastWriteTime |
+                Get-ChildItem -Path $PSScriptRoot | Sort-Object Name | Format-Table Name, LastAccessTime, LastWriteTime |
                 Out-File -FilePath "$PSScriptRoot\C916contents.txt"
             }
             3 {
