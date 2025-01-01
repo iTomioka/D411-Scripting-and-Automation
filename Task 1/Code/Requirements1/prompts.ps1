@@ -38,7 +38,7 @@ while ($true) {
             }
             4 {
                 #list all active processes and sort them in an external grid
-                Get-Process | Sort-Object ID, Name, VM | Sort-Object VM | Out-GridView
+                Get-Process | Select-Object ID, Name, VM | Sort-Object VM | Out-GridView
             }
             5 {
                 #exit the loop
