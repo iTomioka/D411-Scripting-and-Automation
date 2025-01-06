@@ -1,12 +1,11 @@
 # Julio Quinones StudentID: 010973743
 
-
-
 #creating variables
 $oupath = "ou=Finance,dc=consultingfirm,dc=com"
-$ouchecker = Get-ADOrganizationalUnit -Identity $oupath -ErrorAction SilentlyContinue
+$ouchecker = $null
 
-if ($ouchecker) {
+try {
+    $ouchecker = Get-ADOrganizationalUnit -Identity $oupath -ErrorAction Stop
     Write-Output "Found OU Finance, deleting"
     #Setting the protection of accidental deletion to false
     Set-ADOrganizationUnit -Identity $oupath -ProtectedFromAccidentalDeletion:$false
@@ -15,7 +14,7 @@ if ($ouchecker) {
     #Removing the ADO Recursively
     Remove-ADOrganizationalUnit -Identity $oupath -Recursive -Confirm:$false
     Write-Output "Deleted"
-} else {
+} catch [Microsoft.ActiveDirectory.Management.ADIdentityNotFoundException] {
     Write-Output "OU Finance Not Found"
 }
 
@@ -54,5 +53,5 @@ if ($csv) {
         -MobilePhone $user.MobilePhone `
         -PasswordNotRequired $true `
     }
-    Get-ADUser -Filter * -SearchBase “ou=Finance,dc=consultingfirm,dc=com” -Properties DisplayName,PostalCode,OfficePhone,MobilePhone > "$PSScriptRoot\AdResults.txt"
+    Get-ADUser -Filter * -SearchBase "ou=Finance,dc=consultingfirm,dc=com" -Properties DisplayName,PostalCode,OfficePhone,MobilePhone > "$PSScriptRoot\AdResults.txt"
 }
